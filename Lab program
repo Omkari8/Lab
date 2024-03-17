@@ -423,3 +423,579 @@ void main()
         }
     }while(choice!=4);
 }
+
+program=7
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int count=0;
+struct node
+{
+int sem;
+long int phno;
+char name[20], branch[10], usn[20];
+struct node *next;
+}*first=NULL,*last=NULL,*temp=NULL, *temp1;
+void create()
+{
+int sem;
+long int phno;
+char name[20],branch[10],usn[20];
+temp=(struct node*)malloc(sizeof(struct node));
+printf("\n Enter USN, NAME, BRANCH, SEMESTER, PHNUM of student : ");
+scanf("%s %s %s %d %ld", usn, name,branch, &sem,&phno);
+strcpy(temp->usn,usn);
+strcpy(temp->name,name);
+strcpy(temp->branch,branch);
+temp->sem = sem;
+temp->phno = phno;
+temp->next=NULL;
+count++;
+}
+void insert_atfirst()
+{
+if (first == NULL)
+{
+create();
+first = temp;
+last = first;
+}
+else
+{
+create();
+temp->next = first;
+first = temp;
+}
+}
+void insert_atlast()
+{
+if(first==NULL)
+{
+create();
+first = temp;
+last = first;
+}
+else
+{
+create();
+last->next = temp;
+last = temp;
+}
+}
+void display()
+{
+temp1=first;
+if(temp1 == NULL)
+{
+printf("List empty to display \n");
+return;
+}
+printf("\n Linked list elements from begining : \n");
+printf("USN\t NAME\t BRANCH\t SEMESTER\t PH.NUM\n");
+while (temp1!= NULL)
+{
+printf("%s\t %s\t %s\t %d\t\t %ld\n", temp1->usn, temp1->name,   temp1->branch,temp1->sem,temp1->phno);
+temp1 = temp1->next;
+}
+printf(" No of students = %d ", count);
+}
+void delete_end()
+{
+struct node *temp;
+temp=first;
+if(first==NULL)
+{
+printf("List is Empty\n");
+return;
+}
+if(temp->next==NULL)
+{
+printf("%s %s %s %d %ld\n", temp->usn, temp->name,temp->branch, temp->sem, temp->phno);
+free(temp);
+first=NULL;
+}
+else
+{
+while(temp->next!=last)
+temp=temp->next;
+printf("%s %s %s %d %ld\n", last->usn, last->name,last->branch, last->sem, last->phno );
+free(last);
+temp->next=NULL;
+last=temp;
+}
+count--;
+}
+void delete_front()
+{
+struct node *temp;
+temp=first;
+if(first==NULL)
+{
+printf("List is Empty\n");
+return;
+}
+if(temp->next==NULL)
+{
+printf("%s %s %s %d %ld\n", temp->usn, temp->name,temp->branch,   temp->sem, temp->phno);
+free(temp);
+first=NULL;
+}
+else
+{
+first=temp->next;
+printf("%s %s %s %d %ld", temp->usn, temp->name,temp->branch,temp->sem, temp->phno);
+free(temp);
+}
+count--;
+}
+void main()
+{
+int ch,n,i;
+first=NULL;
+temp = temp1 = NULL;
+printf("-----------------MENU----------------------\n");
+printf("\n 1 Create a SLL of n Employees");
+printf("\n 2 - Display from beginning");
+printf("\n 3 - Insert at end");
+printf("\n 4 - delete at end");
+printf("\n 5 - Insert at beg");
+printf("\n 6 - delete at beg");
+printf("\n 7 - exit\n");
+printf("-------------------------------------------\n");
+while (1)
+{
+printf("\n Enter choice : ");
+scanf("%d", &ch);
+switch (ch)
+{
+case 1: printf("\n Enter no of students : ");
+scanf("%d", &n);
+for(i=0;i<n;i++)
+insert_atfirst();
+break;
+case 2: display();
+break;
+case 3: insert_atlast();
+break;
+case 4: delete_end();
+break;
+case 5: insert_atfirst();
+break;
+case 6: delete_front();
+break;
+case 7: exit(0);
+default:printf("Wrong Choice\n");
+}
+}
+}
+prg 8
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int count=0;
+struct node
+{
+struct node *prev;
+int ssn;
+long int phno;
+float sal;
+char name[20],dept[10],desg[20];
+struct node *next;
+}*first,*temp,*last;
+void create()
+{
+int ssn;
+long int phno;
+float sal;
+char name[20],dept[10],desg[20];
+temp =(struct node *)malloc(sizeof(struct node));
+temp->prev = NULL;
+temp->next = NULL;
+printf("\n Enter ssn,name,department, designation, salary and phno of employee : ");
+scanf("%d %s %s %s %f %ld", &ssn, name,dept,desg,&sal, &phno);
+temp->ssn = ssn;
+strcpy(temp->name,name);
+strcpy(temp->dept,dept);
+strcpy(temp->desg,desg);
+temp->sal = sal;
+temp->phno = phno;
+count++;
+}
+void display()
+{
+temp = first;
+if(temp == NULL)
+{
+printf("List is Empty\n");
+return;
+}
+printf("\n Linked list elements from begining : \n");
+while (temp != NULL)
+{
+printf("%d %s %s %s %f %ld\n", temp->ssn, temp->name,temp->dept,
+      temp->desg,temp->sal, temp->phno );
+temp = temp->next;
+}
+printf(" No of employees = %d", count);
+}
+void insert_front()
+{
+if (first == NULL)
+{
+create();
+first = temp;
+last = first;
+}
+else
+{
+create();
+temp->next = first;
+first->prev = temp;
+first = temp;
+}
+}
+void delete_front()
+{
+struct node *cur=first;
+if(first == NULL)
+{
+printf("List is Empty\n");
+return;
+}
+if(first->next == NULL)
+{
+printf("%d %s %s %s %f %ld\n", first->ssn, first->name,first->dept, first->desg,first->sal,first->phno );
+free(first);
+first = NULL;
+}
+else
+{
+first = first->next;
+printf("%d %s %s %s %f %ld", cur->ssn, cur->name,cur->dept, cur->desg,cur->sal, cur->phno );
+free(cur);
+}
+count--;
+}
+void insert_rear()
+{
+if(first == NULL)
+{
+create();
+first = temp;
+last = first;
+}
+else
+{
+create();
+last->next = temp;
+temp->prev = last;
+last = temp;
+}
+}
+void delete_rear()
+{
+if(first == NULL)
+{
+printf("List is Empty\n");
+return;
+}
+if(first->next == NULL)
+{
+printf("%d %s %s %s %f %ld\n", first->ssn, first->name,first->dept, first->desg,first->sal,first->phno );
+free(first);
+first = NULL;
+}
+else
+{
+temp = last->prev;
+temp->next = NULL;
+printf("%d %s %s %s %f %ld\n", last->ssn, last->name,last->dept,  last->desg,last->sal, last->phno );
+free(last);
+last=temp;
+}
+count--;
+}
+void main()
+{
+int ch,n,i;
+first = NULL;
+temp = last = NULL;
+printf("-----------------MENU--------------------\n");
+printf("\n 1 - Create a DLL of n emp");
+printf("\n 2 - Display from beginning");
+printf("\n 3 - Insert at front end");
+printf("\n 4 - Delete at front end");
+printf("\n 5 - Insert at rear end");
+printf("\n 6 - Delete at rear end");
+printf("\n 7 - exit\n");
+printf("------------------------------------------\n");
+while (1)
+{
+printf("\n Enter Choice : ");
+scanf("%d", &ch);
+switch (ch)
+{
+case 1: printf("\n Enter no of employees : ");
+scanf("%d", &n);
+for(i=0;i<n;i++)
+insert_rear();
+break;
+case 2: display();
+break;
+case 3: insert_front();
+break;
+case 4: delete_front();
+break;
+case 5: insert_rear();
+break;
+case 6: delete_rear();
+break;
+case 7: exit(0);
+default:printf("Wrong Choice\n");
+}
+}
+}
+
+prog 9=
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+struct polyt
+{
+ int cf,px, py,pz;
+ struct polyt* next;
+};
+typedef struct polyt* PTR;
+PTR insert(PTR poly, int cf, int px, int py, int pz)
+{
+ PTR cur;
+ PTR nn = (PTR)malloc(sizeof(struct polyt));
+ nn->cf = cf;
+ nn->px = px;
+ nn->py = py;
+ nn->pz = pz;
+ nn->next = NULL;
+ cur = poly;
+ while(cur->next != poly)
+ {
+ cur = cur->next;
+ }
+cur->next = nn;
+nn->next = poly;
+return poly;
+}
+void disp(PTR poly)
+{
+ if (poly->next == poly)
+ {
+ printf("Polynomial is empty.\n");
+ return;
+ }
+ PTR cur = poly->next;
+ do
+ {
+ printf("%dx^%dy^%dz^%d ", cur->cf, cur->px, cur->py, cur->pz);
+ cur = cur->next;
+ if (cur != poly)
+ {
+ printf("+ ");
+ }
+ } while (cur != poly);
+ printf("\n");
+}
+int evaluate(PTR poly, int x, int y, int z)
+{
+ int result = 0;
+ if (poly->next == poly)
+ {
+ return result;
+ }
+ PTR cur = poly->next;
+ do
+ {
+ int termValue = cur->cf;
+ termValue *= pow(x, cur->px);
+ termValue *= pow(y, cur->py);
+ termValue *= pow(z, cur->pz);
+ result += termValue;
+ cur = cur->next;
+ } while (cur != poly);
+ return result;
+}
+bool fmatch(PTR p1, PTR p2)
+{
+bool match = true;
+if(p1->px != p2->px)
+match = false;
+if(p1->py != p2->py)
+match = false;
+if(p1->pz != p2->pz)
+match = false;
+return match;
+}
+PTR add(PTR poly1, PTR poly2, PTR polySum)
+{
+ PTR cur1 = poly1->next;
+ PTR cur2 = poly2->next;
+ do
+ {
+ polySum = insert(polySum, cur1->cf, cur1->px, cur1->py, cur1->pz);
+ cur1 = cur1->next;
+ } while(cur1 != poly1);
+ do
+ {
+ cur1 = polySum->next;
+ bool matchfound = false;
+ do
+ {
+ if(fmatch(cur1, cur2))
+ {
+ cur1->cf += cur2->cf;
+ matchfound = true;
+ break;
+ }
+ cur1 = cur1->next;
+ } while(cur1 != polySum);
+ if(!matchfound)
+ {
+ polySum = insert(polySum, cur2->cf, cur2->px, cur2->py, cur2->pz);
+ }
+ cur2 = cur2->next;
+ } while(cur2 != poly2);
+ return polySum;
+}
+int main()
+{
+ PTR poly1 = (PTR)malloc(sizeof(struct polyt));
+ poly1->next = poly1;
+ PTR poly2 = (PTR)malloc(sizeof(struct polyt));
+ poly2->next = poly2;
+ PTR polySum = (PTR)malloc(sizeof(struct polyt));
+ polySum->next = polySum;
+ poly1 = insert(poly1, 6, 2, 2, 1);
+ poly1 = insert(poly1, -4, 0, 1, 5);
+ poly1 = insert(poly1, 3, 3, 1, 1);
+ poly1 = insert(poly1, 2, 1, 5, 1);
+ poly1 = insert(poly1, -2, 1, 1, 3);
+ printf("POLY1(x, y, z) = ");
+ disp(poly1);
+ poly2 = insert(poly2, 1, 1, 1, 1); 
+ poly2 = insert(poly2, 4, 3, 1, 1);
+ printf("POLY2(x, y, z) = ");
+ disp(poly2);
+ polySum = add(poly1, poly2, polySum);
+ printf("\nPOLYSUM(x, y, z) = ");
+ disp(polySum);
+ int x = 1, y = 2, z = 3;
+ int res = evaluate(polySum, x, y, z);
+ printf("\nResult of POLYSUM(%d, %d, %d): %d\n", x, y, z, res);
+ return 0;
+}
+
+pro 10=
+#include <stdio.h>
+#include <stdlib.h>
+struct BST
+{
+int data;
+struct BST *left;
+struct BST *right;
+};
+typedef struct BST NODE;
+NODE* createtree(NODE *root, int data)
+{
+if (root == NULL)
+{
+NODE *temp;
+temp = (NODE*) malloc (sizeof(NODE));
+temp->data = data;
+temp->left = temp->right = NULL;
+return temp;
+}
+if (data < (root->data))
+root->left = createtree(root->left, data);
+else if (data > root->data)
+root -> right = createtree(root->right, data);
+return root;
+}
+void inorder(NODE *root)
+{
+if(root != NULL)
+{
+inorder(root->left);
+printf("%d\t", root->data);
+inorder(root->right);
+}
+}
+void preorder(NODE *root)
+{
+if(root != NULL)
+{
+printf("%d\t", root->data);
+preorder(root->left);
+preorder(root->right);
+}
+}
+void postorder(NODE *root)
+{
+if(root != NULL)
+{
+postorder(root->left);
+postorder(root->right);
+printf("%d\t", root->data);
+}
+}
+NODE *search(NODE *root, int data)
+{
+if(root == NULL)
+printf("\nElement not found");
+else if(data < root->data)
+root->left = search(root->left, data);
+else if(data > root->data)
+root->right = search(root->right, data);
+else
+printf("\nElement found is: %d", root->data);
+return root;
+}
+void main()
+{
+int data, ch, i, n;
+NODE *root = NULL;
+while (1)
+{
+printf("\n1.Creation of Binary Search Tree");
+printf("\n2.Inorder\n3.Preorder\n4.Postorder\n5.Search\n6.Exit");
+printf("\nEnter your choice: ");
+scanf("%d", &ch);
+switch (ch)
+{
+case 1: printf("\nEnter N value: " );
+scanf("%d", &n);
+printf("\nEnter the values to create BST like(6,9,5,2,8,15,24,14,7,8,5,2)\n");
+for(i=0; i<n; i++)
+{
+scanf("%d", &data);
+root = createtree(root, data);
+}
+break;
+case 2: printf("\nInorder Traversal: \n");
+inorder(root);
+break;
+case 3: printf("\nPreorder Traversal: \n");
+preorder(root);
+break;
+case 4: printf("\nPostorder Traversal: \n");
+postorder(root);
+break;
+case 5: printf("\nEnter the element to Search: ");
+scanf("%d", &data);
+root=search(root, data);
+break;
+case 6: exit(0);
+default: printf("\nWrong Option");
+break;
+}
+}
+}
+

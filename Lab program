@@ -1,111 +1,144 @@
-good afternoon
-lab1=#include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
-struct calElement
-{
-    char *day;
-    int date;
-    char *activity;
-};
-struct calElement*create()
-{
-    struct calElement*calendar;
-    calendar=(struct calElement*)malloc(sizeof(struct calElement)*7);
-    return calendar;
+lab 1 
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h> 
+#include <ctype.h> 
+ 
+#define NUM_DAYS_IN_WEEK  
+typedef struct 
+{ 
+ char *acDayName; 
+ int iDate; 
+ char *acActivity; 
+ } DAYTYPE; 
+ void fnFreeCal (DAYTYPE *); 
+ void fnDispCal (DAYTYPE *); 
+ void fnReadCal (DAYTYPE *); 
+ DAYTYPE *fnCreateCal(); 
+  
+ int main() 
+ {// Create the calendar 
+ DAYTYPE *weeklyCalendar = fnCreateCal(); 
+ // Read data from the keyboard 
+ fnReadCal (weeklyCalendar); 
+ //display the week activity details  
+ fnDispCal(weeklyCalendar); 
+ // Free allocated memory  
+ fnFreeCal (weeklyCalendar); 
+ return 0; 
+} 
+DAYTYPE *fnCreateCal () 
+{ 
+    DAYTYPE *calendar = (DAYTYPE *)malloc( NUM_DAYS_IN_WEEK *sizeof(DAYTYPE)); 
+   for (int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
+    { 
+    calendar[i].acDayName = NULL;  
+    calendar[i].iDate = 0; 
+    calendar[i].acActivity = NULL; 
+    } 
+return calendar; 
 }
-void read(struct calElement*calendar)
-{
-    char day[10];
-    char activity[25];
-    int i,date;
-    for(i=0;i<7;i++)
-    {
-        printf("Enter the day:");
-        scanf("%s",day);
-        calendar[i].day=(char*)malloc(strlen(day)+1);
-        strcpy(calendar[i].day,day);
-        printf("Enter the date:");
-        scanf("%d",&date);
-        calendar[i].date=date;
-        getchar();
-        printf("Enter description of the activity:");
-        scanf("%[^\n]s",activity);
-        calendar[i].activity=(char*)malloc(strlen(activity)+1);
-        strcpy(calendar[i].activity,activity);
-    }
-}
-void display(struct calElement*calendar)
-{
-    int i;
-    printf("\n\nYour calendar\n");
-    printf("Day\t\tDate\t\tActivity");
-    for(i=0;i<7;i++)
-    {
-        printf("\n%s\t\t%d\t\t%s",calendar[i].day,calendar[i].date,calendar[i].activity);
-    }
-}
-void main()
-{
-    struct calElement*calendar;
-    calendar=create();
-    read(calendar);
-    display(calendar);
-    free(calendar);
-}
-lab2=
-#include <stdio.h>
-char STR[100],PAT[100],REP[100],ANS[100];
-int s,p,r,a,flag=0;
-void main()
-{
-    read();
-    replace();
-    display();
-}
-void read()
-{
-    printf("Enter the MAIN string\n");
-    scanf("%s",STR);
-    printf("Enter the PATTERN string\n");
-    scanf("%s",PAT);
-    printf("Enter the REPLACE string\n");
-    scanf("%s",REP);
-}
-void replace()
-{
-    s=p=a=0;
-    while(STR[s]!='\0')
-    {
-        if(STR[s]==PAT[p])
-        {
-            p++;
-            s++;
-            if(PAT[p]=='\0')
-            {
-                flag=1;
-                for(r=0;REP[r]!='\0';r++,a++)
-                    ANS[a]=REP[r];
-                p=0;
-            }
-        }
-        else
-        {
-            ANS[a]=STR[s];
-            s++;
-            a++;
-            p=0;
-        }
-    }
-}
-void display()
-{
-    if(flag==0)
-       printf("Pattern doesn't found!!!");
-    else
-    {
-        ANS[a]='\0';
-        printf("\nThe RESULTANT string is:\n%s\n",ANS);
-    }
-}
-
+ 
+void fnReadCal (DAYTYPE *calendar) 
+{ 
+char cChoice; 
+for (int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
+    { 
+    printf("Do you want to enter details for day %d [Y/N]: ", i + 1); 
+    scanf("%c", &cChoice); 
+    getchar(); 
+    if (tolower(cChoice) == 'n') 
+    continue; 
+    printf("Day Name: "); 
+    char nameBuffer[50]; 
+    scanf("%s", &nameBuffer); 
+     calendar[i].acDayName = strdup (nameBuffer); // Dynamically allocate and copy the string 
+    printf("Date: "); 
+    scanf("%d", &calendar[i].iDate); 
+    printf("Activity: "); 
+    char activityBuffer[100]; 
+    scanf("%S", &activityBuffer); // Read the entire line including spaces 
+    calendar[i].acActivity = strdup (activityBuffer); 
+    printf("\n"); 
+    getchar(); //remove trailing enter character in input buffer 
+    } 
+} 
+void fnDispCal (DAYTYPE *calendar) 
+{ 
+printf("\nWeek's Activity Details:\n"); 
+for (int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
+{ 
+printf("Day %d:\n", i + 1); 
+if (calendar[i].iDate == 0) 
+    { 
+    printf("No Activity\n\n"); 
+    continue; 
+    } 
+printf(" Day Name: %s\n", calendar[i].acDayName); 
+printf(" Date: %d\n", calendar [i].iDate); 
+printf(" Activity: %s\n\n", calendar[i].acActivity); 
+} 
+} 
+void fnFreeCal (DAYTYPE *calendar) 
+{ 
+for(int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
+    { 
+    free (calendar[i].acDayName); 
+    free (calendar[i].acActivity); 
+    } 
+free(calendar); 
+} 
+DATA STRUCTURES LAB                                                                                                       BCSL305 
+ 
+VTU, Belagavi  3 
+ 
+OUT PUT: 
+ 
+Do you want to enter details for day 1 
+[Y/N]: y 
+Day Name: sunday 
+Date: 11 
+Activity: sports 
+Do you want to enter details for day 2 
+[Y/N]: y 
+Day Name: monday 
+Date: 12 
+Activity: International conference 
+Do you want to enter details for day 3 
+[Y/N]: Day Name: Date: n 
+Activity:  
+Do you want to enter details for day 4 
+[Y/N]: n 
+Do you want to enter details for day 5 
+[Y/N]: n 
+Do you want to enter details for day 6 
+[Y/N]: n 
+Do you want to enter details for day 7 
+[Y/N]: n 
+Week's Activity Details: 
+Day 1: 
+ 
+ 
+Day Name: Sunday 
+Date: 11 
+Activity: s 
+Day 2: 
+Day Name: Monday 
+Date: 12 
+Activity: I 
+Day 3: 
+No Activity 
+Day 4: 
+No Activity 
+Day 5: 
+No Activity 
+Day 6: 
+No Activity 
+Day 7: 
+No Activity 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -24,4 +24,419 @@ int main() {
 }
 
 lab2:
+#include <iostream>
+using namespace std;
+
+void sortAscending(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) {
+            swap(arr[i], arr[minIndex]);
+        }
+    }
+}
+
+
+void sortDescending(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+
+        int maxIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[maxIndex]) {
+                maxIndex = j;
+            }
+        }
+
+        if (maxIndex != i) {
+            swap(arr[i], arr[maxIndex]);
+        }
+    }
+}
+
+
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    sortAscending(arr, n);
+    cout << "Array sorted in ascending order: ";
+    printArray(arr, n);
+
+    sortDescending(arr, n);
+    cout << "Array sorted in descending order: ";
+    printArray(arr, n);
+
+    return 0;
+}
+
+lab3:
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string name;
+    int rollNumber;
+    float marks1, marks2, totalMarks;
+
+public:
+        void inputDetails() {
+        cout << "Enter student name: ";
+        getline(cin, name);
+        cout << "Enter roll number: ";
+        cin >> rollNumber;
+        cout << "Enter marks for subject 1: ";
+        cin >> marks1;
+        cout << "Enter marks for subject 2: ";
+        cin >> marks2;
+        totalMarks = marks1 + marks2;
+    }
+
+        void displayDetails() {
+        cout << "\nStudent Name: " << name << endl;
+        cout << "Roll Number: " << rollNumber << endl;
+        cout << "Marks in Subject 1: " << marks1 << endl;
+        cout << "Marks in Subject 2: " << marks2 << endl;
+        cout << "Total Marks: " << totalMarks << endl;
+    }
+};
+
+int main() {
+    Student student;
+    student.inputDetails();
+    student.displayDetails();
+    return 0;
+}
+
+lab4:
+#include <iostream>
+#include <string>
+using namespace std;
+
+class BankEmployee {
+private:
+    string name;
+    int accountNo;
+    float balance;
+
+public:
+    BankEmployee(string empName, int empAccountNo, float initialBalance) {
+        name = empName;
+        accountNo = empAccountNo;
+        balance = initialBalance;
+    }
+
+    void displayDetails() {
+        cout << "\nEmployee Name: " << name << endl;
+        cout << "Account Number: " << accountNo << endl;
+        if (balance < 500) {
+            cout << "Invalid Balance (less than 500)" << endl;
+        } else {
+            cout << "Account Balance: " << balance << endl;
+        }
+    }
+
+    void deposit(float amount) {
+        balance += amount;
+        cout << "Deposited: " << amount << endl;
+        displayDetails();
+    }
+
+    void withdraw(float amount) {
+        if (balance - amount < 500) {
+            cout << "Invalid Withdrawal. Insufficient balance to maintain a minimum of 500." << endl;
+        } else {
+            balance -= amount;
+            cout << "Withdrawn: " << amount << endl;
+        }
+        displayDetails();
+    }
+};
+
+int main() {
+    string name;
+    int accountNo;
+    float initialBalance, amount;
+
+    cout << "Enter employee name: ";
+    getline(cin, name);
+    cout << "Enter account number: ";
+    cin >> accountNo;
+    cout << "Enter initial balance: ";
+    cin >> initialBalance;
+
+    BankEmployee employee(name, accountNo, initialBalance);
+    employee.displayDetails();
+
+    cout << "\nEnter amount to deposit: ";
+    cin >> amount;
+    employee.deposit(amount);
+
+    cout << "\nEnter amount to withdraw: ";
+    cin >> amount;
+    employee.withdraw(amount);
+
+    return 0;
+}
+
+lab5:
+#include<iostream>
+using namespace std;
+
+class Add {
+public:
+    Add(int a, int b) {
+        cout << "Sum of integers: " << a + b << endl;
+    }
+
+    Add(double a, double b) {
+        cout << "Sum of doubles: " << a + b << endl;
+    }
+};
+
+int main()
+{
+    int a = 5, b = 10;
+    double x = 5.5, y = 10.5;
+
+    Add addInt(a, b);
+    Add addDouble(x, y);
+
+    return 0;
+}
+
+lab6:
+#include<iostream>
+using namespace std;
+ class NUM
+{
+    private:
+        int n;
+    public:
+        void getNum(int x)
+        {
+            n=x;
+        }
+        void dispNum(void)
+        {
+            cout << "value of n is: " << n;
+        }
+        void operator -(void)
+        {
+            n=-n;
+        }
+};
+int main()
+{
+    NUM num;
+    num.getNum(23);
+    -num;
+    num.dispNum();
+    cout << endl;
+    return 0;
+}
+
+lab7:
+#include <iostream>
+using namespace std;
+
+class Add
+{
+    protected:
+        int sum;
+    public:
+        Add()
+        {
+            sum = 0;
+        }
+        void add(int a, int b)
+        {
+            sum = a + b;
+        }
+        void displaySum() {
+            cout << "The sum is " << sum << endl;
+        }
+};
+
+ class Subtract
+{
+    protected:
+        int diff;
+    public:
+        Subtract()
+        {
+            diff = 0;
+        }
+        void subtract(int a, int b)
+        {
+            diff = a - b;
+        }
+        void displayDiff()
+        {
+            cout << "The difference is " << diff << endl;
+        }
+};
+class Multiple
+{
+    protected:
+        int mul;
+    public:
+        Multiple()
+        {
+            mul = 0;
+        }
+        void multiple(int a, int b)
+        {
+            mul = a * b;
+        }
+        void displayMul()
+        {
+            cout << "The Multiplication is " << mul << endl;
+        }
+};
+class Division
+{
+    protected:
+        int div;
+    public:
+        Division()
+        {
+            div = 0;
+        }
+        void division(int a, int b)
+        {
+            div = a / b;
+        }
+        void displayDiv()
+        {
+            cout << "The Division is " << div << endl;
+        }
+};
+class Arithmetic : public Add, public Subtract, public Multiple, public Division{
+    public:
+        void arithmetic(int a, int b) {
+            add(a, b);
+            subtract(a, b);
+            multiple(a, b);
+            division(a, b);
+
+            displaySum();
+            displayDiff();
+            displayMul();
+            displayDiv();
+        }
+};
+
+int main() {
+    Arithmetic obj;
+    int x = 20, y = 5;
+    obj.arithmetic(x, y);
+    return 0;
+}
+
+lab8:
+#include<iostream>
+using namespace std;
+
+class Alpha
+{
+    protected:
+        int alpha;
+    public:
+        Alpha(int a) : alpha(a) {}
+};
+class Beta : public Alpha
+{
+    protected:
+        int beta;
+    public:
+        Beta(int a, int b) : Alpha(a), beta(b) {}
+};
+class Gamma : public Beta
+{
+    private:
+        int gamma;
+    public:
+    Gamma(int a, int b, int c) : Beta(a, b), gamma(c) {}
+
+    void display()
+    {
+        cout << "Alpha: " << alpha << ", Beta: " << beta << ", Gamma: " << gamma << endl;
+    }
+};
+
+int main()
+{
+    Gamma g(1, 2, 3);
+    g.display();
+    return 0;
+}
+
+
+lab11:
+#include <iostream>
+
+double divide(double x, double y) {
+    if (y == 0) {
+        throw "Division by zero error";
+    }
+    return x / y;
+}
+
+int main() {
+    double a = 10, b = 0;
+    try {
+        std::cout << "Result: " << divide(a, b) << std::endl;
+    }
+    catch (const char* e) {
+        std::cout << "Error: " << e << std::endl;
+    }
+    return 0;
+}
+
+lab12:
+#include <iostream>
+#include <stdexcept>
+Using namespace std;
+
+int main() {
+    try {
+        int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        // Accessing out of bounds will throw an exception
+        for(int i = 0; i <= 10; i++) {
+            if(i == 10) {
+                throw out_of_range("Array index out of bound");
+            }
+            cout << "arr[" << i << "] = " << arr[i] << endl;
+        }
+    } catch(const std::out_of_range& e) {
+        cerr << "Caught exception: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
+
 

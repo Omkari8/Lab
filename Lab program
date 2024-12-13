@@ -1,227 +1,27 @@
-lab 1 
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <ctype.h> 
- 
-#define NUM_DAYS_IN_WEEK  
-typedef struct 
-{ 
- char *acDayName; 
- int iDate; 
- char *acActivity; 
- } DAYTYPE; 
- void fnFreeCal (DAYTYPE *); 
- void fnDispCal (DAYTYPE *); 
- void fnReadCal (DAYTYPE *); 
- DAYTYPE *fnCreateCal(); 
-  
- int main() 
- {// Create the calendar 
- DAYTYPE *weeklyCalendar = fnCreateCal(); 
- // Read data from the keyboard 
- fnReadCal (weeklyCalendar); 
- //display the week activity details  
- fnDispCal(weeklyCalendar); 
- // Free allocated memory  
- fnFreeCal (weeklyCalendar); 
- return 0; 
-} 
-DAYTYPE *fnCreateCal () 
-{ 
-    DAYTYPE *calendar = (DAYTYPE *)malloc( NUM_DAYS_IN_WEEK *sizeof(DAYTYPE)); 
-   for (int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
-    { 
-    calendar[i].acDayName = NULL;  
-    calendar[i].iDate = 0; 
-    calendar[i].acActivity = NULL; 
-    } 
-return calendar; 
-}
- 
-void fnReadCal (DAYTYPE *calendar) 
-{ 
-char cChoice; 
-for (int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
-    { 
-    printf("Do you want to enter details for day %d [Y/N]: ", i + 1); 
-    scanf("%c", &cChoice); 
-    getchar(); 
-    if (tolower(cChoice) == 'n') 
-    continue; 
-    printf("Day Name: "); 
-    char nameBuffer[50]; 
-    scanf("%s", &nameBuffer); 
-     calendar[i].acDayName = strdup (nameBuffer); // Dynamically allocate and copy the string 
-    printf("Date: "); 
-    scanf("%d", &calendar[i].iDate); 
-    printf("Activity: "); 
-    char activityBuffer[100]; 
-    scanf("%S", &activityBuffer); // Read the entire line including spaces 
-    calendar[i].acActivity = strdup (activityBuffer); 
-    printf("\n"); 
-    getchar(); //remove trailing enter character in input buffer 
-    } 
-} 
-void fnDispCal (DAYTYPE *calendar) 
-{ 
-printf("\nWeek's Activity Details:\n"); 
-for (int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
-{ 
-printf("Day %d:\n", i + 1); 
-if (calendar[i].iDate == 0) 
-    { 
-    printf("No Activity\n\n"); 
-    continue; 
-    } 
-printf(" Day Name: %s\n", calendar[i].acDayName); 
-printf(" Date: %d\n", calendar [i].iDate); 
-printf(" Activity: %s\n\n", calendar[i].acActivity); 
-} 
-} 
-void fnFreeCal (DAYTYPE *calendar) 
-{ 
-for(int i = 0; i < NUM_DAYS_IN_WEEK; i++) 
-    { 
-    free (calendar[i].acDayName); 
-    free (calendar[i].acActivity); 
-    } 
-free(calendar); 
-} 
-DATA STRUCTURES LAB                                                                                                       BCSL305 
- 
-VTU, Belagavi  3 
- 
-OUT PUT: 
- 
-Do you want to enter details for day 1 
-[Y/N]: y 
-Day Name: sunday 
-Date: 11 
-Activity: sports 
-Do you want to enter details for day 2 
-[Y/N]: y 
-Day Name: monday 
-Date: 12 
-Activity: International conference 
-Do you want to enter details for day 3 
-[Y/N]: Day Name: Date: n 
-Activity:  
-Do you want to enter details for day 4 
-[Y/N]: n 
-Do you want to enter details for day 5 
-[Y/N]: n 
-Do you want to enter details for day 6 
-[Y/N]: n 
-Do you want to enter details for day 7 
-[Y/N]: n 
-Week's Activity Details: 
-Day 1: 
- 
- 
-Day Name: Sunday 
-Date: 11 
-Activity: s 
-Day 2: 
-Day Name: Monday 
-Date: 12 
-Activity: I 
-Day 3: 
-No Activity 
-Day 4: 
-No Activity 
-Day 5: 
-No Activity 
-Day 6: 
-No Activity 
-Day 7: 
-No Activity 
-lab 2
- 
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <string.h> 
-int main() 
-{ 
-    char acMainStr[200], acSrchStr[30], acRepStr[30], acResStr[200], acCopyStr[200]; 
-    int i=0, j=0 ,k=0, l, iMtchCnt, iStop, len, iNumOfMatch=0; 
- 
-    printf("\nEnter the main string :\n"); 
- scanf(" %[^\n]", acMainStr); 
- 
-    printf("\nEnter the Pattern string :\n"); 
- scanf(" %[^\n]", acSrchStr); 
-    printf("\nEnter the Replace string :\n"); 
- scanf(" %[^\n]", acRepStr);     
-    strcpy(acCopyStr, acMainStr); 
-    for(i=0;i<(strlen(acMainStr)-strlen(acSrchStr)+1);i++) 
-    { 
-        iMtchCnt = 0; 
-        for(j=0;j<strlen(acSrchStr);j++) 
-        { 
-            if(acMainStr[i+j] == acSrchStr[j]) 
-            { 
-                iMtchCnt++; 
-            } 
-            else 
-            { 
-                break; 
-            } 
-            if(iMtchCnt == strlen(acSrchStr))   //Check if number of character matches equals length of 
-pattern string 
-            { 
-                iNumOfMatch++;      //update number of total matches by 1 
-                for(k=0;k<i;k++) 
-                { 
-                    acResStr[k] = acMainStr[k];     //copy till the ith character where the match occured 
-                } 
-                iStop = k + strlen(acSrchStr); //point from where rest of the original string has to be copied 
-                acResStr[k] = '\0'; 
-                strcat(acResStr, acRepStr); // append the replacement string 
-                len = strlen(acResStr); 
-                for(k=iStop, l=0; acMainStr[k] != '\0';k++, l++) //copy rest of original string 
-DATA STRUCTURES LAB                                                                                                       BCSL305 
- 
-VTU, Belagavi  5 
- 
-                { 
-                    acResStr[len+l] = acMainStr[k]; 
-                } 
-                acResStr[len+l] = '\0'; 
-                strcpy(acMainStr,acResStr); 
-            } 
-        } 
-    } 
-    printf("\nInput Text :\n"); 
-    printf("%s\n",acCopyStr); 
-    if(iNumOfMatch > 0) 
-    { 
-        printf("\n%d matches occured\n\nText after replacing matched patterns is shown below\n", 
-iNumOfMatch); 
-        printf("\n%s\n",acResStr); 
-    } 
-    else 
-    { 
-        printf("\nPattern String not found in Text\n"); 
-    } 
-    return 0; 
-} 
- 
-OUT PUT: 
-Enter the main string : 
-Abaaab 
-Enter the Pattern string : 
-ab 
-Enter the Replace string : 
-ba 
-Input Text : 
-abaaab 
-2 matches occured 
-Text after replacing matched patterns is shown below 
+lab 1:
+#include <iostream>
+using namespace std;
 
- 
- 
- 
- 
- 
- 
+int main() {
+
+    int num1, num2, num3;
+
+   cout << "Enter three numbers: ";
+    cin >> num1 >> num2 >> num3;
+
+
+    if (num1 >= num2 && num1 >= num3) {
+        cout << "The largest number is: " << num1 << endl;
+    }
+    else if (num2 >= num1 && num2 >= num3) {
+        cout << "The largest number is: " << num2 << endl;
+    }
+    else {
+        cout << "The largest number is: " << num3 << endl;
+    }
+
+    return 0;
+}
+
+lab2:
+

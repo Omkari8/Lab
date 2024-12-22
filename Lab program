@@ -1,442 +1,569 @@
-lab 1:
-#include <iostream>
-using namespace std;
+lab 1=
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+# 1. Combining and Merging Datasets
+# Create two sample DataFrames
+sales_data_1 = pd.DataFrame({
+    'OrderID': [1, 2, 3, 4],
+    'Product': ['Laptop', 'Tablet', 'Smartphone', 'Headphones'],
+    'Sales': [1200, 800, 1500, 300]
+})
 
-int main() {
+sales_data_2 = pd.DataFrame({
+    'OrderID': [3, 4, 5, 6],
+    'Product': ['Smartphone', 'Headphones', 'Smartwatch', 'Tablet'],
+    'Sales': [1500, 300, 200, 900]
+})
+# Display the DataFrames
+print("Sales Data 1:\n", sales_data_1)
+print("\nSales Data 2:\n", sales_data_2)
+# Merge DataFrames based on 'OrderID' using an inner join
+merged_data = pd.merge(sales_data_1, sales_data_2, on='OrderID', how='inner', suffixes=('_left', '_right'))
+print("\nMerged Data (Inner Join):\n", merged_data)
+# Concatenate the DataFrames vertically
+combined_data = pd.concat([sales_data_1, sales_data_2], ignore_index=True)
+print("\nCombined Data (Concatenated Vertically):\n", combined_data)
+# 2. Reshaping Data with Melt
+# Create a sample DataFrame for reshaping
+reshaping_data = pd.DataFrame({
+    'Month': ['Jan', 'Feb', 'Mar'],
+    'Product_A': [100, 150, 130],
+    'Product_B': [90, 80, 120]
+})
+print("\nReshaping Data (Original):\n", reshaping_data)
+# Melt the DataFrame to reshape it from wide to long format
+melted_data = pd.melt(reshaping_data, id_vars=['Month'], var_name='Product', value_name='Sales')
+print("\nMelted Data (Long Format):\n", melted_data)
+# 3. Pivoting Data
+# Create a sample DataFrame for pivoting
+pivot_data = pd.DataFrame({
+    'Month': ['Jan', 'Jan', 'Feb', 'Feb', 'Mar', 'Mar'],
+    'Product': ['Product_A', 'Product_B', 'Product_A', 'Product_B', 'Product_A', 'Product_B'],
+    'Sales': [100, 90, 150, 80, 130, 120]
+})
+print("\nPivot Data (Original):\n", pivot_data)
+# Pivot the DataFrame to reshape it back to wide format
+pivoted_data = pivot_data.pivot(index='Month', columns='Product', values='Sales')
+print("\nPivoted Data (Wide Format):\n", pivoted_data)
+# 4. Handling Missing Data
+# Introduce some missing values
+pivoted_data.loc['Feb', 'Product_A'] = np.nan
+pivoted_data.loc['Mar', 'Product_B'] = np.nan
+print("\nPivoted Data with Missing Values:\n", pivoted_data)
+# Fill missing values with the mean of each column
+filled_data = pivoted_data.fillna(pivoted_data.mean())
+print("\nFilled Data (Missing Values Handled):\n", filled_data)
+# 5. Summary Statistics
+print("\nSummary Statistics of Filled Data:\n", filled_data.describe())
 
-    int num1, num2, num3;
+OUTPUT:
+Sales Data 1:
+    OrderID     Product  Sales
+0        1      Laptop   1200
+1        2      Tablet    800
+2        3  Smartphone   1500
+3        4  Headphones    300
 
-   cout << "Enter three numbers: ";
-    cin >> num1 >> num2 >> num3;
+Sales Data 2:
+    OrderID     Product  Sales
+0        3  Smartphone   1500
+1        4  Headphones    300
+2        5  Smartwatch    200
+3        6      Tablet    900
 
+Merged Data (Inner Join):
+    OrderID Product_left  Sales_left Product_right  Sales_right
+0        3   Smartphone        1500    Smartphone         1500
+1        4   Headphones         300    Headphones          300
 
-    if (num1 >= num2 && num1 >= num3) {
-        cout << "The largest number is: " << num1 << endl;
+Combined Data (Concatenated Vertically):
+    OrderID     Product  Sales
+0        1      Laptop   1200
+1        2      Tablet    800
+2        3  Smartphone   1500
+3        4  Headphones    300
+4        3  Smartphone   1500
+5        4  Headphones    300
+6        5  Smartwatch    200
+7        6      Tablet    900
+
+Reshaping Data (Original):
+   Month  Product_A  Product_B
+0   Jan        100         90
+1   Feb        150         80
+2   Mar        130        120
+
+Melted Data (Long Format):
+   Month    Product  Sales
+0   Jan  Product_A    100
+1   Feb  Product_A    150
+2   Mar  Product_A    130
+3   Jan  Product_B     90
+4   Feb  Product_B     80
+5   Mar  Product_B    120
+
+Pivot Data (Original):
+   Month    Product  Sales
+0   Jan  Product_A    100
+1   Jan  Product_B     90
+2   Feb  Product_A    150
+3   Feb  Product_B     80
+4   Mar  Product_A    130
+5   Mar  Product_B    120
+
+Pivoted Data (Wide Format):
+ Product  Product_A  Product_B
+Month                        
+Feb            150         80
+Jan            100         90
+Mar            130        120
+
+Pivoted Data with Missing Values:
+ Product  Product_A  Product_B
+Month                        
+Feb            NaN       80.0
+Jan          100.0       90.0
+Mar          130.0        NaN
+
+Filled Data (Missing Values Handled):
+ Product  Product_A  Product_B
+Month                        
+Feb          115.0       80.0
+Jan          100.0       90.0
+Mar          130.0       85.0
+
+Summary Statistics of Filled Data:
+ Product  Product_A  Product_B
+count          3.0        3.0
+mean         115.0       85.0
+std           15.0        5.0
+min          100.0       80.0
+25%          107.5       82.5
+50%          115.0       85.0
+75%          122.5       87.5
+max          130.0       90.0
+
+lab 2=
+String Manupulation:
+# Sample text to work with
+text = "  Hello, World! Welcome to Python programming.  "
+# 1. Strip leading and trailing spaces
+clean_text = text.strip()
+print(f"Original Text: '{text}'")
+print(f"Text after stripping spaces: '{clean_text}'")
+# 2. Convert the text to uppercase
+upper_text = clean_text.upper()
+print(f"\nText in uppercase: '{upper_text}'")
+# 3. Convert the text to lowercase
+lower_text = clean_text.lower()
+print(f"\nText in lowercase: '{lower_text}'")
+# 4. Count occurrences of a substring (e.g., "o")
+count_o = clean_text.count("o")
+print(f"\nNumber of occurrences of 'o': {count_o}")
+# 5. Replace a word in the string
+replaced_text = clean_text.replace("Python", "Data Science")
+print(f"\nText after replacing 'Python' with 'Data Science': '{replaced_text}'")
+# 6. Find the position of a word in the string
+position_world = clean_text.find("World")
+print(f"\nPosition of 'World' in the text: {position_world}")
+# 7. Split the text into words (by default on spaces)
+words = clean_text.split()
+print(f"\nList of words in the text: {words}")
+# 8. Join the words back into a single string
+joined_text = " ".join(words)
+print(f"\nText after joining words: '{joined_text}'")
+# 9. Check if the text starts with "Hello"
+starts_with_hello = clean_text.startswith("Hello")
+print(f"\nDoes the text start with 'Hello'? {starts_with_hello}")
+# 10. Check if the text ends with a specific word (e.g., "programming.")
+ends_with_programming = clean_text.endswith("programming.")
+print(f"\nDoes the text end with 'programming.'? {ends_with_programming}")
+
+OUTPUT:
+Original Text: '  Hello, World! Welcome to Python programming.  '
+Text after stripping spaces: 'Hello, World! Welcome to Python programming.'
+Text in uppercase: 'HELLO, WORLD! WELCOME TO PYTHON PROGRAMMING.'
+Text in lowercase: 'hello, world! welcome to python programming.'
+Number of occurrences of 'o': 6
+Text after replacing 'Python' with 'Data Science': 'Hello, World! Welcome to Data Science programming.'
+Position of 'World' in the text: 7
+List of words in the text: ['Hello,', 'World!', 'Welcome', 'to', 'Python', 'programming.']
+Text after joining words: 'Hello, World! Welcome to Python programming.'
+Does the text start with 'Hello'? True
+Does the text end with 'programming.'? True
+
+Regular Expressions:
+import re
+# Sample text
+text = """
+John's email is [email protected]. He said, "Python is awesome!!"    It's a     great   language.
+Another email: [email protected]. 
+"""
+# 1. Remove special characters except for spaces and email-related characters.
+# Using regex to remove non-alphabetic characters and non-email symbols
+clean_text = re.sub(r"[^a-zA-Z0-9@\.\s]", "", text)
+print("Text after removing special characters:")
+print(clean_text)
+# 2. Convert the text to lowercase
+clean_text = clean_text.lower()
+print("\nText after converting to lowercase:")
+print(clean_text)
+# 3. Replace multiple spaces with a single space
+clean_text = re.sub(r"\s+", " ", clean_text)
+print("\nText after replacing multiple spaces:")
+print(clean_text)
+# 4. Extract all words starting with a vowel (a, e, i, o, u)
+vowel_words = re.findall(r"\b[aeiouAEIOU]\w+", clean_text)
+print("\nWords starting with a vowel:")
+print(vowel_words)
+# 5. Replace email addresses with '[email protected]'
+masked_text = re.sub(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b", "[email protected]", clean_text)
+print("\nText after replacing emails:")
+print(masked_text)
+
+OUTPUT:
+Text after removing special characters:
+Johns email is email protected. He said Python is awesome    Its a     great   language.
+Another email email protected. 
+
+Text after converting to lowercase:
+johns email is email protected. he said python is awesome   its  a     great   language.
+another email email protected. 
+
+Text after replacing multiple spaces:
+ johns email is email protected. he said python is awesome its a great language. another email email protected. 
+
+Words starting with a vowel:
+['email', 'is', 'email', 'is', 'awesome', 'its', 'another', 'email', 'email']
+
+Text after replacing emails:
+ johns email is email protected. he said python is awesome its a great language. another email email protected. 
+
+lab 3=
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
+# Create sample time series data
+np.random.seed(42)
+date_range = pd.date_range(start="2022-01-01", end="2023-01-01", freq="D")
+data = pd.DataFrame({
+    "Date": date_range,
+    "Value_A": np.random.normal(100, 10, len(date_range)),
+    "Value_B": np.random.normal(200, 20, len(date_range)),
+})
+# Set Date as the index
+data.set_index("Date", inplace=True)
+# GroupBy Mechanics
+def groupby_mechanics(data):
+    print("\n--- GroupBy Mechanics ---")
+    # Group data by month and calculate mean
+    grouped = data.resample('ME').mean()
+    print(grouped)
+    return grouped
+# Data Formats: Vector and Multivariate
+def data_formats(data):
+    print("\n--- Data Formats ---")
+    # Display data as vector
+    print("\nVector Format:")
+    print(data["Value_A"].head())
+    # Display multivariate time series
+    print("\nMultivariate Time Series:")
+    print(data.head())
+# Forecasting Example
+def time_series_forecasting(data):
+    print("\n--- Forecasting ---")
+    # Select a single column for forecasting
+    ts = data["Value_A"]
+    # Train-Test Split
+    train = ts[:int(0.8 * len(ts))]
+    test = ts[int(0.8 * len(ts)):]
+    # Fit the Holt-Winters Exponential Smoothing model
+    model = ExponentialSmoothing(train, seasonal="add", seasonal_periods=30).fit()
+    # Forecast for the test period
+    forecast = model.forecast(len(test))
+    # Plot results
+    plt.figure(figsize=(12, 6))
+    plt.plot(train, label="Train")
+    plt.plot(test, label="Test")
+    plt.plot(forecast, label="Forecast")
+    plt.legend()
+    plt.title("Time Series Forecasting")
+    plt.show()
+# Main function
+if __name__ == "__main__":
+    print("--- Time Series Data ---")
+    print(data.head())
+    # Grouping Mechanics
+    monthly_data = groupby_mechanics(data)
+    # Data Formats
+    data_formats(data)
+    # Time Series Forecasting
+    time_series_forecasting(data)
+
+OUTPUT:
+--- Time Series Data ---
+               Value_A     Value_B
+Date                              
+2022-01-01  104.967142  204.481850
+2022-01-02   98.617357  200.251848
+2022-01-03  106.476885  201.953522
+2022-01-04  115.230299  184.539804
+2022-01-05   97.658466  200.490203
+
+--- GroupBy Mechanics ---
+               Value_A     Value_B
+Date                              
+2022-01-31   97.985125  202.137470
+2022-02-28   98.568317  204.960833
+2022-03-31  100.439383  194.956405
+2022-04-30   99.797484  198.429574
+2022-05-31   99.161855  199.020262
+2022-06-30  102.912924  192.752508
+2022-07-31  100.983406  199.844253
+2022-08-31   99.784632  201.134556
+2022-09-30   99.089296  203.720687
+2022-10-31  100.649960  198.150774
+2022-11-30  102.325711  199.427682
+2022-12-31   99.467543  197.195680
+2023-01-31   95.987795  180.432544
+
+--- Data Formats ---
+
+Vector Format:
+Date
+2022-01-01    104.967142
+2022-01-02     98.617357
+2022-01-03    106.476885
+2022-01-04    115.230299
+2022-01-05     97.658466
+Name: Value_A, dtype: float64
+
+Multivariate Time Series:
+               Value_A     Value_B
+Date                              
+2022-01-01  104.967142  204.481850
+2022-01-02   98.617357  200.251848
+2022-01-03  106.476885  201.953522
+2022-01-04  115.230299  184.539804
+2022-01-05   97.658466  200.490203
+
+lab 4=
+# Import necessary libraries
+import numpy as np
+import pandas as pd
+def calculate_statistics(data, frequencies):
+    # Create a DataFrame for the frequency distribution
+    df = pd.DataFrame({'Value': data, 'Frequency': frequencies})
+    # Calculate the total number of observations
+    total = df['Frequency'].sum()
+    # Calculate mean
+    df['Weighted_Value'] = df['Value'] * df['Frequency']
+    mean = df['Weighted_Value'].sum() / total
+    # Calculate median
+    cumulative_frequency = df['Frequency'].cumsum()
+    median_index = cumulative_frequency.searchsorted(total / 2)
+    median = df['Value'][median_index]
+    # Calculate mode
+    mode = df['Value'][df['Frequency'].idxmax()]
+    # Calculate variance and standard deviation
+    variance = np.average((df['Value'] - mean) ** 2, weights=df['Frequency'])
+    std_deviation = np.sqrt(variance)
+    # Calculate mean deviation
+    mean_deviation = np.average(np.abs(df['Value'] - mean), weights=df['Frequency'])
+    # Calculate quartile deviation
+    q1 = np.percentile(data, 25)
+    q3 = np.percentile(data, 75)
+    quartile_deviation = (q3 - q1) / 2
+    return {
+        'Mean': mean,
+        'Median': median,
+        'Mode': mode,
+        'Variance': variance,
+        'Standard Deviation': std_deviation,
+        'Mean Deviation': mean_deviation,
+        'Quartile Deviation': quartile_deviation
     }
-    else if (num2 >= num1 && num2 >= num3) {
-        cout << "The largest number is: " << num2 << endl;
-    }
-    else {
-        cout << "The largest number is: " << num3 << endl;
-    }
+# Get user input for data and frequencies
+data_input = input("Enter the data values separated by commas (e.g., 10, 20, 30): ")
+frequencies_input = input("Enter the corresponding frequencies separated by commas (e.g., 1, 2, 3): ")
+# Convert input strings to lists of integers
+data = list(map(int, data_input.split(',')))
+frequencies = list(map(int, frequencies_input.split(',')))
+# Calculate statistics
+statistics = calculate_statistics(data, frequencies)
+# Display the results
+for stat, value in statistics.items():
+    print(f"{stat}: {value:.2f}")
 
-    return 0;
+OUTPUT:
+Enter the data values separated by commas (e.g., 10, 20, 30):  20, 40, 60
+Enter the corresponding frequencies separated by commas (e.g., 1, 2, 3):  7, 8, 9
+Mean: 41.67
+Median: 40.00
+Mode: 60.00
+Variance: 263.89
+Standard Deviation: 16.24
+Mean Deviation: 13.75
+Quartile Deviation: 10.00
+
+lab 5=
+import numpy as np
+from sklearn.model_selection import train_test_split, KFold, LeaveOneOut
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+X, y = np.array([[1], [2], [3], [4], [5]]), np.array([1.2, 2.3, 2.9, 4.1, 5.1])
+model = LinearRegression()
+
+def cross_validate(method):  # General cross-validation
+    errors = [[], [], []]
+    for train_idx, test_idx in method.split(X):
+        model.fit(X[train_idx], y[train_idx])
+        y_pred = model.predict(X[test_idx])
+        errors[0].append(mean_squared_error(y[test_idx], y_pred, squared=False))
+        errors[1].append(mean_absolute_error(y[test_idx], y_pred))
+        errors[2].append(r2_score(y[test_idx], y_pred))
+    return f"RMSE: {np.mean(errors[0]):.2f}, MAE: {np.mean(errors[1]):.2f}, R2: {np.mean(errors[2]):.2f}"
+
+print("Validation Set ->", cross_validate(LeaveOneOut() if len(X) == 5 else KFold(2)))
+
+lab 6=
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm, binom, poisson, bernoulli
+
+# Given data values and frequencies
+data_values = [10, 30, 50, 70]
+frequencies = [1, 2, 3, 4]
+
+# Plot Normal Distribution
+plt.subplot(2, 2, 1)
+plt.hist(np.random.normal(0, 1, 1000), bins=30, density=True, alpha=0.6, color='g')
+x = np.linspace(-4, 4, 100)
+plt.plot(x, norm.pdf(x), 'k', linewidth=2)
+plt.title('Normal Distribution')
+
+# Plot Binomial Distribution
+plt.subplot(2, 2, 2)
+plt.hist(binom.rvs(10, 0.5, 1000), bins=10, density=True, alpha=0.6, color='b')
+plt.title('Binomial Distribution')
+
+# Plot Poisson Distribution
+plt.subplot(2, 2, 3)
+plt.hist(poisson.rvs(3, 1000), bins=15, density=True, alpha=0.6, color='r')
+plt.title('Poisson Distribution')
+
+# Plot Bernoulli Distribution
+plt.subplot(2, 2, 4)
+plt.hist(bernoulli.rvs(0.5, 1000), bins=2, density=True, alpha=0.6, color='y')
+plt.title('Bernoulli Distribution')
+
+# Plot custom frequency distribution
+plt.figure(figsize=(6, 4))
+plt.bar(data_values, frequencies, color='c', width=8)
+plt.title('Custom Frequency Distribution')
+plt.xlabel('Data Values')
+plt.ylabel('Frequency')
+
+plt.tight_layout()
+plt.show()
+
+lab 7=
+import numpy as np
+from scipy import stats
+
+# Sample Data
+sample1 = np.array([25, 30, 35, 40, 45])
+sample2 = np.array([28, 33, 38, 42, 46])
+
+# One-sample t-test (test if the mean is 30)
+t_stat_one, p_val_one = stats.ttest_1samp(sample1, 30)
+
+# Two-sample t-test (compare means of two independent samples)
+t_stat_two, p_val_two = stats.ttest_ind(sample1, sample2)
+
+# Paired-sample t-test (compare paired data)
+t_stat_paired, p_val_paired = stats.ttest_rel(sample1, sample2)
+
+# Output Results
+print(f"One-sample t-test: t-statistic = {t_stat_one}, p-value = {p_val_one}")
+print(f"Two-sample t-test: t-statistic = {t_stat_two}, p-value = {p_val_two}")
+print(f"Paired-sample t-test: t-statistic = {t_stat_paired}, p-value = {p_val_paired}")
+
+lab 8=
+import numpy as np
+import pandas as pd
+from scipy import stats
+
+# Sample Data for One-way ANOVA
+group1 = np.array([25, 30, 35, 40])
+group2 = np.array([28, 33, 38, 42])
+group3 = np.array([27, 32, 37, 41])
+
+# One-way ANOVA (comparing means of three groups)
+f_stat_oneway, p_val_oneway = stats.f_oneway(group1, group2, group3)
+
+# Sample Data for Two-way ANOVA
+data = {
+    'Factor1': ['A', 'A', 'A', 'B', 'B', 'B'],
+    'Factor2': ['X', 'Y', 'X', 'Y', 'X', 'Y'],
+    'Values': [25, 30, 35, 40, 45, 50]
 }
+df = pd.DataFrame(data)
 
-lab2:
-#include <iostream>
-using namespace std;
+# Two-way ANOVA
+anova_table = pd.pivot_table(df, values='Values', index='Factor1', columns='Factor2', aggfunc=np.mean)
+f_stat_twoway, p_val_twoway = stats.f_oneway(*[df[df['Factor1'] == f]['Values'] for f in df['Factor1'].unique()])
 
-void sortAscending(int arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
+# Output Results
+print(f"One-way ANOVA: F-statistic = {f_stat_oneway}, p-value = {p_val_oneway}")
+print(f"Two-way ANOVA: F-statistic = {f_stat_twoway}, p-value = {p_val_twoway}")
 
-        int minIndex = i;
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
-            }
-        }
+lab 9=
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-        if (minIndex != i) {
-            swap(arr[i], arr[minIndex]);
-        }
-    }
-}
+# Data
+x = np.random.rand(50) * 10
+y = 2.5 * x + np.random.normal(0, 5, 50)
+data = pd.DataFrame({'X': x, 'Y': y})
 
+# Correlation and Regression
+corr = data.corr()
+m, b = np.polyfit(x, y, 1)
 
-void sortDescending(int arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
+# Output
+print("Correlation:\n", corr)
+print(f"Regression: Y = {m:.2f}*X + {b:.2f}")
 
-        int maxIndex = i;
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j] > arr[maxIndex]) {
-                maxIndex = j;
-            }
-        }
+# Plot
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+plt.scatter(x, y)
+plt.plot(x, m * x + b, color='red')
+plt.show()
 
-        if (maxIndex != i) {
-            swap(arr[i], arr[maxIndex]);
-        }
-    }
-}
+lab 10=
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_breast_cancer
+from sklearn.preprocessing import StandardScaler
 
+# Load and scale the data
+X, y = load_breast_cancer(return_X_y=True)
+X_scaled = StandardScaler().fit_transform(X)
 
-void printArray(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-}
+# Apply PCA
+X_pca = PCA(n_components=2).fit_transform(X_scaled)
 
-int main() {
-    int n;
-    cout << "Enter the number of elements: ";
-    cin >> n;
-
-    int arr[n];
-    cout << "Enter the elements: ";
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-
-    sortAscending(arr, n);
-    cout << "Array sorted in ascending order: ";
-    printArray(arr, n);
-
-    sortDescending(arr, n);
-    cout << "Array sorted in descending order: ";
-    printArray(arr, n);
-
-    return 0;
-}
-
-lab3:
-#include <iostream>
-#include <string>
-using namespace std;
-
-class Student {
-private:
-    string name;
-    int rollNumber;
-    float marks1, marks2, totalMarks;
-
-public:
-        void inputDetails() {
-        cout << "Enter student name: ";
-        getline(cin, name);
-        cout << "Enter roll number: ";
-        cin >> rollNumber;
-        cout << "Enter marks for subject 1: ";
-        cin >> marks1;
-        cout << "Enter marks for subject 2: ";
-        cin >> marks2;
-        totalMarks = marks1 + marks2;
-    }
-
-        void displayDetails() {
-        cout << "\nStudent Name: " << name << endl;
-        cout << "Roll Number: " << rollNumber << endl;
-        cout << "Marks in Subject 1: " << marks1 << endl;
-        cout << "Marks in Subject 2: " << marks2 << endl;
-        cout << "Total Marks: " << totalMarks << endl;
-    }
-};
-
-int main() {
-    Student student;
-    student.inputDetails();
-    student.displayDetails();
-    return 0;
-}
-
-lab4:
-#include <iostream>
-#include <string>
-using namespace std;
-
-class BankEmployee {
-private:
-    string name;
-    int accountNo;
-    float balance;
-
-public:
-    BankEmployee(string empName, int empAccountNo, float initialBalance) {
-        name = empName;
-        accountNo = empAccountNo;
-        balance = initialBalance;
-    }
-
-    void displayDetails() {
-        cout << "\nEmployee Name: " << name << endl;
-        cout << "Account Number: " << accountNo << endl;
-        if (balance < 500) {
-            cout << "Invalid Balance (less than 500)" << endl;
-        } else {
-            cout << "Account Balance: " << balance << endl;
-        }
-    }
-
-    void deposit(float amount) {
-        balance += amount;
-        cout << "Deposited: " << amount << endl;
-        displayDetails();
-    }
-
-    void withdraw(float amount) {
-        if (balance - amount < 500) {
-            cout << "Invalid Withdrawal. Insufficient balance to maintain a minimum of 500." << endl;
-        } else {
-            balance -= amount;
-            cout << "Withdrawn: " << amount << endl;
-        }
-        displayDetails();
-    }
-};
-
-int main() {
-    string name;
-    int accountNo;
-    float initialBalance, amount;
-
-    cout << "Enter employee name: ";
-    getline(cin, name);
-    cout << "Enter account number: ";
-    cin >> accountNo;
-    cout << "Enter initial balance: ";
-    cin >> initialBalance;
-
-    BankEmployee employee(name, accountNo, initialBalance);
-    employee.displayDetails();
-
-    cout << "\nEnter amount to deposit: ";
-    cin >> amount;
-    employee.deposit(amount);
-
-    cout << "\nEnter amount to withdraw: ";
-    cin >> amount;
-    employee.withdraw(amount);
-
-    return 0;
-}
-
-lab5:
-#include<iostream>
-using namespace std;
-
-class Add {
-public:
-    Add(int a, int b) {
-        cout << "Sum of integers: " << a + b << endl;
-    }
-
-    Add(double a, double b) {
-        cout << "Sum of doubles: " << a + b << endl;
-    }
-};
-
-int main()
-{
-    int a = 5, b = 10;
-    double x = 5.5, y = 10.5;
-
-    Add addInt(a, b);
-    Add addDouble(x, y);
-
-    return 0;
-}
-
-lab6:
-#include<iostream>
-using namespace std;
- class NUM
-{
-    private:
-        int n;
-    public:
-        void getNum(int x)
-        {
-            n=x;
-        }
-        void dispNum(void)
-        {
-            cout << "value of n is: " << n;
-        }
-        void operator -(void)
-        {
-            n=-n;
-        }
-};
-int main()
-{
-    NUM num;
-    num.getNum(23);
-    -num;
-    num.dispNum();
-    cout << endl;
-    return 0;
-}
-
-lab7:
-#include <iostream>
-using namespace std;
-
-class Add
-{
-    protected:
-        int sum;
-    public:
-        Add()
-        {
-            sum = 0;
-        }
-        void add(int a, int b)
-        {
-            sum = a + b;
-        }
-        void displaySum() {
-            cout << "The sum is " << sum << endl;
-        }
-};
-
- class Subtract
-{
-    protected:
-        int diff;
-    public:
-        Subtract()
-        {
-            diff = 0;
-        }
-        void subtract(int a, int b)
-        {
-            diff = a - b;
-        }
-        void displayDiff()
-        {
-            cout << "The difference is " << diff << endl;
-        }
-};
-class Multiple
-{
-    protected:
-        int mul;
-    public:
-        Multiple()
-        {
-            mul = 0;
-        }
-        void multiple(int a, int b)
-        {
-            mul = a * b;
-        }
-        void displayMul()
-        {
-            cout << "The Multiplication is " << mul << endl;
-        }
-};
-class Division
-{
-    protected:
-        int div;
-    public:
-        Division()
-        {
-            div = 0;
-        }
-        void division(int a, int b)
-        {
-            div = a / b;
-        }
-        void displayDiv()
-        {
-            cout << "The Division is " << div << endl;
-        }
-};
-class Arithmetic : public Add, public Subtract, public Multiple, public Division{
-    public:
-        void arithmetic(int a, int b) {
-            add(a, b);
-            subtract(a, b);
-            multiple(a, b);
-            division(a, b);
-
-            displaySum();
-            displayDiff();
-            displayMul();
-            displayDiv();
-        }
-};
-
-int main() {
-    Arithmetic obj;
-    int x = 20, y = 5;
-    obj.arithmetic(x, y);
-    return 0;
-}
-
-lab8:
-#include<iostream>
-using namespace std;
-
-class Alpha
-{
-    protected:
-        int alpha;
-    public:
-        Alpha(int a) : alpha(a) {}
-};
-class Beta : public Alpha
-{
-    protected:
-        int beta;
-    public:
-        Beta(int a, int b) : Alpha(a), beta(b) {}
-};
-class Gamma : public Beta
-{
-    private:
-        int gamma;
-    public:
-    Gamma(int a, int b, int c) : Beta(a, b), gamma(c) {}
-
-    void display()
-    {
-        cout << "Alpha: " << alpha << ", Beta: " << beta << ", Gamma: " << gamma << endl;
-    }
-};
-
-int main()
-{
-    Gamma g(1, 2, 3);
-    g.display();
-    return 0;
-}
-
-
-lab11:
-#include <iostream>
-
-double divide(double x, double y) {
-    if (y == 0) {
-        throw "Division by zero error";
-    }
-    return x / y;
-}
-
-int main() {
-    double a = 10, b = 0;
-    try {
-        std::cout << "Result: " << divide(a, b) << std::endl;
-    }
-    catch (const char* e) {
-        std::cout << "Error: " << e << std::endl;
-    }
-    return 0;
-}
-
-lab12:
-#include <iostream>
-#include <stdexcept>
-Using namespace std;
-
-int main() {
-    try {
-        int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        // Accessing out of bounds will throw an exception
-        for(int i = 0; i <= 10; i++) {
-            if(i == 10) {
-                throw out_of_range("Array index out of bound");
-            }
-            cout << "arr[" << i << "] = " << arr[i] << endl;
-        }
-    } catch(const std::out_of_range& e) {
-        cerr << "Caught exception: " << e.what() << endl;
-    }
-
-    return 0;
-}
-
-
+# Plot the results
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis')
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.title('PCA - Wisconsin Breast Cancer Dataset')
+plt.colorbar(label='Cancer Type (0: Malignant, 1: Benign)')
+plt.show()
 

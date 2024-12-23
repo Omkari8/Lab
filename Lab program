@@ -514,12 +514,14 @@ data = {
 df = pd.DataFrame(data)
 
 # Two-way ANOVA
-anova_table = pd.pivot_table(df, values='Values', index='Factor1', columns='Factor2', aggfunc=np.mean)
+anova_table = pd.pivot_table(df, values='Values', index='Factor1', columns='Factor2', aggfunc='mean')
 f_stat_twoway, p_val_twoway = stats.f_oneway(*[df[df['Factor1'] == f]['Values'] for f in df['Factor1'].unique()])
 
 # Output Results
 print(f"One-way ANOVA: F-statistic = {f_stat_oneway}, p-value = {p_val_oneway}")
 print(f"Two-way ANOVA: F-statistic = {f_stat_twoway}, p-value = {p_val_twoway}")
+
+
 
 lab 9=
 import numpy as np

@@ -569,3 +569,21 @@ plt.title('PCA - Wisconsin Breast Cancer Dataset')
 plt.colorbar(label='Cancer Type (0: Malignant, 1: Benign)')
 plt.show()
 
+lab 11 = 
+from sklearn.datasets import load_iris
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+import matplotlib.pyplot as plt
+
+# Load the Iris dataset
+X, y = load_iris(return_X_y=True)
+
+# Apply LDA
+X_lda = LDA(n_components=2).fit_transform(X, y)
+
+# Visualize the results
+plt.scatter(X_lda[:, 0], X_lda[:, 1], c=y, cmap='viridis', edgecolor='k', alpha=0.7)
+plt.xlabel('LD1')
+plt.ylabel('LD2')
+plt.title('LDA - Iris Dataset')
+plt.colorbar(label='Classes')
+plt.show()

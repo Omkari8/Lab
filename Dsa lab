@@ -1,1 +1,359 @@
+lab:01
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Day {
+    char dayName[20];
+    int date;
+    char activity[100];
+};
+
+void create(struct Day *day) {
+    printf("Enter the day name: ");
+    scanf("%s", day->dayName);
+
+    printf("Enter the date: ");
+    scanf("%d", &day->date);
+
+    printf("Enter the activity for the day: ");
+    scanf(" %[^\n]s", day->activity);
+}
+
+void read(struct Day *calendar, int size) {
+    for (int i = 0; i < size; i++) {
+        printf("Enter details for Day %d:\n", i + 1);
+        create(&calendar[i]);
+    }
+}
+
+void display(struct Day *calendar, int size) {
+    printf("\nWeek's Activity Details:\n");
+    for (int i = 0; i < size; i++) {
+        printf("Day %d:\n", i + 1);
+        printf("Day Name: %s\n", calendar[i].dayName);
+        printf("Date: %d\n", calendar[i].date);
+        printf("Activity: %s\n\n", calendar[i].activity);
+    }
+}
+
+int main() {
+    int size;
+    printf("Enter the number of days in the week: ");
+    scanf("%d", &size);
+
+    struct Day *calendar = (struct Day *)malloc(sizeof(struct Day) * size);
+    if (!calendar) {
+        printf("Memory allocation failed. Exiting program.\n");
+        return 1;
+    }
+
+    read(calendar, size);
+    display(calendar, size);
+
+    free(calendar);
+    return 0;
+}
+
+lab:02
+#include<stdio.h>
+
+char str[50], pat[20], rep[20], res[50];
+int c = 0, m = 0, i = 0, j = 0, k, flag = 0;
+void stringmatch()
+{
+    while (str[c] != '\0')
+    {
+        if (str[m] == pat[i])
+        {
+            i++;
+            m++;
+            if (pat[i] == '\0')
+            {
+                flag = 1;
+                for (k = 0; rep[k] != '\0'; k++, j++)
+                {
+                    res[j] = rep[k];
+                }
+                i = 0;
+                c = m;
+            }
+        }
+        else
+        {
+            res[j] = str[c];
+            j++;
+            c++;
+            m = c;
+            i = 0;
+        }
+    }
+    res[j] = '\0';
+}
+void main()
+{
+    printf("Enter the main string:");
+    gets(str);
+    printf("\nEnter the pat string:");
+    gets(pat);
+    printf("\nEnter the replace string:");
+    gets(rep);
+    printf("\nThe string before pattern match is:\n %s", str);
+    stringmatch();
+    if (flag == 1)
+        printf("\nThe string after pattern match and replace is: \n %s ", res);
+    else
+        printf("\nPattern string is not found");
+}
+
+lab:03
+#include<stdio.h>#include<stdlib.h>#define MAX 3int s[MAX];
+int top = -1;void push(int item);
+int pop();
+void palindrome();
+void display();void main()
+{
+int choice, item;
+while (1)
+{
+printf("\n\n\n\n-----------Menu----------- : ");
+printf("\n=>1.Push an Element to Stack and Overflow demo ");
+printf("\n=>2.Pop an Element from Stack and Underflow demo");
+printf("\n=>3.Palindrome demo ");
+printf("\n=>4.Display ");
+printf("\n=>5.Exit");
+printf("\nEnter your choice: ");
+scanf("%d", & choice);
+switch (choice)
+{
+case 1:
+printf("\nEnter an element to be pushed: ");
+scanf("%d", & item);
+push(item);
+break;
+case 2:
+item = pop();
+if (item != -1)
+printf("\nElement popped is: %d", item);
+break;
+case 3:
+palindrome();
+break;
+case 4:
+display();
+break;
+case 5:
+exit(1);
+default:
+printf("\nPlease enter valid choice ");
+break;
+}
+}
+}void push(int item)
+{
+if (top == MAX - 1)
+{
+printf("\n-----------Stack overflow-----------");
+return;
+}top = top + 1;
+s[top] = item;
+}int pop()
+{
+int item;
+if (top == -1)
+{
+printf("\n-----------Stack underflow-----------");
+return -1;
+}
+item = s[top];
+top = top - 1;
+return item;
+}void display()
+{
+int i;
+if (top == -1)
+{
+printf("\n-----------Stack is empty-----------");
+return;
+}
+printf("\nStack elements are:\n ");
+for (i = top; i >= 0; i--)
+printf("| %d |\n", s[i]);
+}void palindrome()
+{
+int flag = 1, i;
+printf("\nStack content are:\n");
+for (i = top; i >= 0; i--)
+printf("| %d |\n", s[i]);printf("\nReverse of stack content are:\n");
+for (i = 0; i <= top; i++)
+printf("| %d |\n", s[i]);for (i = 0; i <= top / 2; i++)
+{
+if (s[i] != s[top - i])
+{
+flag = 0;
+break;
+}
+}
+if (flag == 1)
+{
+printf("\nIt is palindrome number");
+}
+else
+{
+printf("\nIt is not a palindrome number");
+}
+}
+
+lab:05b
+#include <stdio.h>
+
+void tower(int n, int source, int temp, int destination)
+{
+    if (n == 0)
+        return;
+    tower(n - 1, source, destination, temp);
+    printf("\nMove disc %d from %c to %c", n, source, destination);
+    tower(n - 1, temp, source, destination);
+}
+void main()
+{
+    int n;
+    printf("\nEnter the number of discs: \n");
+    scanf("%d", & n);
+    tower(n, 'A', 'B', 'C');
+    printf("\n\nTotal Number of moves are: %d", (int) pow(2, n) - 1);
+}
+
+lab=06
+#include<stdio.h>
+#define MAX 5
+
+char queue[MAX];
+int front = -1, rear = -1;
+
+int isEmpty() { return front == -1; }
+int isFull() { return (rear + 1) % MAX == front; }
+
+void insert(char element) {
+    if (isFull()) return (void)printf("Queue Overflow\n");
+    if (isEmpty()) front = rear = 0;
+    else rear = (rear + 1) % MAX;
+    queue[rear] = element;
+}
+
+void delete() {
+    if (isEmpty()) return (void)printf("Queue Underflow\n");
+    if (front == rear) front = rear = -1;
+    else front = (front + 1) % MAX;
+}
+
+void display() {
+    if (isEmpty()) return (void)printf("Queue is empty\n");
+    for (int i = front;; i = (i + 1) % MAX) {
+        printf("%c ", queue[i]);
+        if (i == rear) break;
+    }
+    printf("\n");
+}
+
+int main() {
+    int choice;
+    char element;
+    while (1) {
+        printf("\n1.Insert 2.Delete 3.Display 4.Exit: ");
+        scanf("%d", &choice);
+        if (choice == 4) break;
+        if (choice == 1) {
+            printf("Enter element: ");
+            scanf(" %c", &element);
+            insert(element);
+        } else if (choice == 2) delete();
+        else if (choice == 3) display();
+        else printf("Invalid choice\n");
+    }
+    return 0;
+}
+
+lab:10
+#include <stdio.h>
+#include <stdlib.h>
+
+struct BST {
+    int data;
+    struct BST *lchild, *rchild;
+};
+typedef struct BST *NODE;
+
+NODE create() {
+    NODE temp = (NODE)malloc(sizeof(struct BST));
+    printf("Enter value: ");
+    scanf("%d", &temp->data);
+    temp->lchild = temp->rchild = NULL;
+    return temp;
+}
+
+void insert(NODE root, NODE newnode) {
+    if (newnode->data < root->data) {
+        if (root->lchild) insert(root->lchild, newnode);
+        else root->lchild = newnode;
+    } else if (newnode->data > root->data) {
+        if (root->rchild) insert(root->rchild, newnode);
+        else root->rchild = newnode;
+    }
+}
+
+void search(NODE root) {
+    if (!root) return (void)printf("Tree is empty.\n");
+    int key;
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+    while (root) {
+        if (key == root->data) return (void)printf("Element found.\n");
+        root = key < root->data ? root->lchild : root->rchild;
+    }
+    printf("Element not found.\n");
+}
+
+void traverse(NODE root, int type) {
+    if (!root) return;
+    if (type == 1) printf("%d ", root->data);           
+    traverse(root->lchild, type);
+    if (type == 2) printf("%d ", root->data);           
+    traverse(root->rchild, type);
+    if (type == 3) printf("%d ", root->data);           
+}
+
+int main() {
+    NODE root = NULL, newnode;
+    int ch, n, i;
+    while (1) {
+        printf("\n1.Create 2.Search 3.Traversals 4.Exit\nEnter choice: ");
+        scanf("%d", &ch);
+        if (ch == 4) break;
+        switch (ch) {
+            case 1:
+                printf("Number of elements: ");
+                scanf("%d", &n);
+                for (i = 0; i < n; i++) {
+                    newnode = create();
+                    root = root ? root : newnode;
+                    if (root != newnode) insert(root, newnode);
+                }
+                break;
+            case 2:
+                search(root);
+                break;
+            case 3:
+                printf("Preorder: "); traverse(root, 1); printf("\n");
+                printf("Inorder: "); traverse(root, 2); printf("\n");
+                printf("Postorder: "); traverse(root, 3); printf("\n");
+                break;
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
+    return 0;
+}
+
+
+
 

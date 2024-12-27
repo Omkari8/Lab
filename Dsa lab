@@ -243,6 +243,106 @@ int main(void) {
     return 0;
 }
 
+lab 04:
+#include<stdio.h>
+#include<stdlib.h>
+
+void evaluate();
+void push(char);
+char pop();
+int prec(char);
+
+char infix[20], postfix[30], stack[40];
+int top = -1;
+
+int main()
+{
+    printf("Enter the infix expression:\n");
+    scanf("%s", infix);
+    evaluate();
+    printf("The infix expression is: %s\n", infix);
+    printf("The postfix expression is: %s\n", postfix);
+    return 0;
+}
+
+void evaluate()
+{
+    char temp, symb;
+    int i = 0, j = 0;
+    push('#'); 
+    
+    while (infix[i] != '\0')
+    {
+        symb = infix[i++];
+
+        if ((symb >= 'a' && symb <= 'z') || (symb >= 'A' && symb <= 'Z') || (symb >= '0' && symb <= '9'))
+            postfix[j++] = symb;
+
+        else if (symb == '(')
+        {
+            push(symb);
+        }
+
+        else if (symb == ')')
+        {
+            while ((temp = pop()) != '(')
+                postfix[j++] = temp;
+        }
+
+        else
+        {
+            while (prec(stack[top]) >= prec(symb))
+                postfix[j++] = pop();
+            push(symb);
+        }
+    }
+
+    while (top > 0)
+    {
+        postfix[j++] = pop();
+    }
+    postfix[j] = '\0'; 
+
+void push(char item)
+{
+    stack[++top] = item;
+}
+
+char pop()
+{
+    return stack[top--];
+}
+
+int prec(char symb)
+{
+    switch (symb)
+    {
+        case '#':
+            return -1;
+
+        case '(':
+        case ')':
+            return 0;
+
+        case '+':
+        case '-':
+            return 1;
+
+        case '*':
+        case '/':
+        case '%':
+            return 2;
+
+        case '$':
+        case '^':
+            return 3;
+
+        default:
+            return -1;
+    }
+}
+
+
 
 
 lab:05b

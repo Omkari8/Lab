@@ -342,6 +342,81 @@ int prec(char symb)
     }
 }
 
+lab 05:a
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<ctype.h>
+
+int stack[30], top = -1;
+
+void push(int item)
+{
+    stack[++top] = item;
+}
+
+int pop()
+{
+    return stack[top--];
+}
+
+int main()
+{
+    char postfix[20], symb;
+    int i = 0, op1, op2;
+
+    printf("Enter the valid postfix expression:\n");
+    scanf("%s", postfix);
+
+    while (postfix[i] != '\0')
+    {
+        symb = postfix[i++];
+
+        if (isdigit(symb))
+            push(symb - '0');
+        else
+        {
+            op2 = pop();
+            op1 = pop();
+
+            switch (symb)
+            {
+                case '+':
+                    push(op1 + op2);
+                    break;
+
+                case '-':
+                    push(op1 - op2);
+                    break;
+
+                case '*':
+                    push(op1 * op2);
+                    break;
+
+                case '/':
+                    push(op1 / op2);
+                    break;
+
+                case '%':
+
+                    push(op1 % op2);
+                    break;
+
+                case '$':
+                case '^':
+                    push(pow(op1, op2));
+                    break;
+
+                default:
+                    printf("Invalid operator: %c\n", symb);
+                    return 1;
+            }
+        }
+    }
+
+    printf("The result of the postfix expression is: %d\n", pop());
+    return 0;
+}
 
 
 

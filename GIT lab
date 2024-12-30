@@ -1,0 +1,244 @@
+PROGRAM 1
+Initialize a new Git repository in a directory. Create a new file and add it to the staging area and commit 
+the changes with an appropriate commit message.
+Creating a New Directory and Navigating to It.
+STEP 1: mkdir folder_name:
+* Creates a new directory with the specified name.
+* For example, mkdir my_project creates a directory named "my_project".
+STEP 2: cd folder_name:
+* Changes the current directory to the specified directory.
+* For example, cd my_project changes the current directory to "my_project".
+Listing Directory Contents and Checking Current Directory
+STEP 3: ls:
+* Lists the contents of the current directory.
+* This shows files and subdirectories within the current directory.
+STEP 4: pwd:
+* Prints the current working directory path.
+* This tells you where you are in the file system.
+Initializing a Git Repository
+STEP 5: git init:
+* Initializes a new Git repository in the current directory.
+* This creates a .git hidden directory to store Git's metadata.
+Configuring Git User Information
+STEP 6: git config --global user.name "your_name":
+* Sets your name globally for all Git commits.
+* Replace "your_name" with your actual name.
+STEP 7: git config --global user.email "your_email@example.com":
+* Sets your email address globally for all Git commits.
+* Replace "your_email@example.com" with your actual email address.
+Creating and Tracking Files 
+STEP 8: touch file1.txt:
+* Creates a new file named "file1.txt" in the current directory.
+STEP 9: ls:
+* Lists the contents of the current directory.
+* This shows files and subdirectories within the current directory
+STEP 10: git status:
+* Shows the current state of the working directory.
+* It indicates which files are tracked, untracked, modified, or staged.
+STEP 11: git add file1.txt:
+* Stages the changes in "file1.txt" for the next commit. * Staged changes are included in the next commit.
+STEP 12: git status:
+* Shows the current state of the working directory.
+* It indicates which files are tracked, untracked, modified, or staged.
+STEP 13: git commit -m "file created":
+* Creates a new commit with the specified message.
+* The staged changes are committed to the repository.Editing and Committing a File STEP 14: git status:
+* Shows the current state of the working directory.
+* It indicates which files are tracked, untracked, modified, or staged.
+STEP 15: vi file2.txt:
+* Opens the file "file2.txt" in the vi text editor. * You can edit the file's content.
+STEP 16: git add .:
+* Stages all changes in the current directory for the next commit.
+STEP 17: git commit -m "added file":
+* Creates a new commit with the specified message.
+* All staged changes are committed to the repository.
+Viewing Commit History STEP 18: git 
+status:
+* Shows the current state of the working directory.
+* It indicates which files are tracked, untracked, modified, or staged.
+STEP 19: git log:
+* Shows the commit history of the current repository
+
+PROGRAM 2
+Create a new branch named "new" Switch to the "master" branch. Merge the "new" into "master."
+STEP 1: git branch new:
+* This command creates a new branch named "new". This new branch is a copy of the current branch's state. 
+STEP 2: git branch:
+* This command lists all the branches in the current repository. Youshould see both "master" and "new" 
+branches now.
+STEP 3: git checkout new:
+* This command switches your working directory to the newly created
+"new" branch. Any changes you make from now on will be specific to this branch.
+STEP 4: vi file3.txt
+* This command opens the file "file3.txt" in the vi text editor. You can editthe contents of this file. STEP 5:
+git add .:
+* This command stages all the changes made to tracked files in thecurrent directory. In this case, it stages the 
+changes made to "file3.txt".
+STEP 6: git commit -m "edited file":
+* This command creates a new commit on the "new" branch with themessage "edited file". The staged changes 
+are included in this commit. STEP 7: git status:
+* This command shows the current state of the working directory. It willshow that you're on the "new" branch 
+and there are no changes to be committed.
+STEP 8: git checkout master:
+* This command switches your working directory back to the "master"branch. Any changes you make from 
+now on will be specific to this branch.
+STEP 9: git merge new:
+* This command merges the changes from the "new" branch into the
+"master" branch. Git will automatically try to combine the changes from both branches. If there are conflicts, you'll 
+need to resolve them manually.
+STEP 10: git log:
+* This command shows the commit history of the current branch.
+
+PROGRAM 3
+Write the commands to stash your changes, switch branches, and then apply the stashed 
+changes. Let's break down each command step-by-step:
+STEP 1: git branch new:
+* This command creates a new branch named "new". This new branch is a copy of the current branch's 
+state.
+STEP 2: git checkout new:
+* This command switches your working directory to the newly created"new" branch. Any changes you 
+make from now on will be specific to this branch.
+STEP 3: vi file4.txt:
+* This command opens the file "file4.txt" in the vi text editor. You can edit the contents of this file.
+STEP 4: git stash:
+* This command temporarily saves your uncommitted changes. This is useful when you need to switch 
+branches or perform other tasks without committing your current work.
+STEP 5: git checkout master:
+* This command switches your working directory back to the "master"branch.
+STEP 6: git stash apply:
+* This command applies the saved changes from the stash to the currentbranch, which is "master" in this 
+case.
+STEP 7: git status:
+* This command shows the current state of the working directory. It will show that there are changes to 
+be committed.
+STEP 8: git add .:
+* This command stages all the changes made to tracked files in thecurrent directory, which are the changes 
+applied from the stash.
+STEP 9: git status:
+* This command shows the current state of the working directory. It willshow that there are staged changes 
+to be committed.
+STEP 10: git commit -m "stash changed":
+* This command creates a new commit on the "master" branch with themessage "stash changed". The 
+staged changes are included in this commit.
+STEP 11: git log:
+* This command shows the commit history of the current branch.
+
+PROGRAM 4
+Clone a remote Git repository to your local machine.
+Breaking Down the Commands
+Let's break down each command step-by-step:
+STEP 1: mkdir clone:
+* mkdir: This is a command-line utility used to create a new directory.
+* clone: This is the name of the directory you want to create.
+So, this command creates a new directory named "clone" in your current working directory.
+STEP 2: cd clone:
+* cd: This command is used to change your current working directory.
+* clone: This is the name of the directory you want to change into.
+This command will move you into the newly created "clone" directory.
+STEP 3: git clone (paste URL):
+* git clone: This Git command is used to clone an existing Git repository
+
+PROGRAM 5
+Fetch the latest changes from a remote repository and rebase your local branch onto the 
+updated remote branch. Understanding the Commands
+Let's break down each command step-by-step: STEP 1: cd repository name: * Purpose: This command changes 
+the current directory to the specified repository.
+* Explanation:
+* cd: Stands for "change directory."
+* repository name: Replace this with the actual name of your Git repository. * Example: cd my-project
+This would change your current working directory to the folder named "my-project".
+STEP 2: git fetch origin:
+* Purpose: This command fetches the latest changes from the remoterepository named "origin" to your local 
+repository.
+* Explanation:
+* git fetch: Fetches commits, files, and other objects from a remote repository.
+* origin: Refers to the default remote repository, usually set up when you clone a repository. * What happens:
+* It downloads new commits, branches, and tags from the remoterepository.
+* These changes are stored locally but are not immediately merged into your current branch.
+STEP 3: git rebase origin/main:
+* Purpose: This command reapplies your local commits on top of the latestcommits from the remote "main" 
+branch.
+* Explanation:
+* git rebase: Rebases your current branch onto another branch.
+* origin/main: Refers to the remote "main" branch.
+* What happens:
+* It replays your local commits on top of the latest commits from the remote "main" branch.
+* This creates a linear commit history, making it easier to review and understand the changes.
+STEP 4: git log:
+* Purpose: This command displays a log of commits in your localrepository.
+* Explanation:
+* git log: Shows the commit history.
+
+
+PROGRAM 6
+Write the command to merge “feature-branch” into 
+“master” while providing a custom commit message for the merge.
+STEP 1: git branch feature-branch:
+* Purpose: Creates a new branch named "feature-branch" off of the currently checked-out branch. * How it 
+works:
+* Git creates a new pointer to the current commit.
+* This new pointer is named "feature-branch."
+* You can now make changes on this new branch without affecting the original branch.
+STEP 2: git checkout feature-branch:
+* Purpose: Switches the active branch to "sub-branch." * How it works:
+* Git updates the working directory to match the state of the "sub-branch."
+* Any changes you make from this point on will be applied to the "sub-branch."
+STEP 3: vi file5.txt:
+* Purpose: Opens the file "file5.txt" in the vi text editor.
+* How it works:
+* This command is not specific to Git but is a common Linux command toedit text files.
+* You can use vi to make changes to the file, which will be reflected in the "sub-branch" when you commit.
+STEP 4: git commit -m "commit": 
+Commits the staged changes with the message "commit". 
+STEP 5: git checkout master: 
+Switches to the master branch (or main, depending on your project setup). 
+STEP 6: git merge feature-branch: 
+Merges the changes from feature-branch into the current branch (master in this case).
+STEP 7: git log:
+* Purpose: Shows the commit history of the current branch
+
+PROGRAM 7
+Write the command to create a lightweight git tag named “V1.0” for a commit in your local repository.
+STEP 1: git tag V1.0 <commit_id>:
+* This command creates a tag named "V1.0" and associates it with the specified commit ID. This tag marks a 
+specific point in your project's history, often representing a release version.
+STEP 2: git show V1.0:
+* This command displays detailed information about the commit taggedas "V1.0". It shows the commit 
+message, author, date, and the changes introduced in that commit.
+STEP 3: git tag V1.1 <commit_id>:
+* This command creates another tag named "V1.1" and associates it with adifferent commit ID. This might 
+represent a subsequent release or a major update.
+STEP 4: git show V1.1:
+* Similar to the previous command, this displays detailed informationabout the commit tagged as "V1.1".
+
+PROGRAM 8
+Write the command to cherry-pick a range of commits from “main” to the current branch.
+Understanding the Commands
+Let's break down each command and its purpose within a Git repository:
+STEP 1: git checkout main:
+* Purpose: Switches the active branch to "main".
+* How it works:
+* Git updates the working directory to match the state of the "main" branch.
+* Any changes you make from this point on will be applied to the "main" branch.
+STEP 2: git cherry-pick (paste commit ID):
+* Purpose: Applies the changes introduced by a specific commit to thecurrent branch.
+* How it works:
+* You provide the commit ID of the change you want to cherry-pick.
+* Git identifies the changes introduced by that commit.
+* It creates a new commit on the current branch with those changes.
+* This is useful when you want to apply a specific fix or feature from one branch to another. 
+STEP 3: git log:
+* Purpose: Shows the commit history of the current branch.
+
+PROGRAM 9
+Given a commit ID, how would you use Git to view the details of that specific commit, including the author, 
+date, and commit message?
+STEP 1: git show <commit ID>:
+git show displays detailed information about a Git object, most commonly a commit.
+
+PROGRAM 10
+Write the command to list all commits made by the author “Mukund” on “2024-12-04”.
+STEP 1: git log --author="author name" --since="start date" -until="end date":
+This Git command is a powerful tool for filtering and analyzing your project's commit history
+
+

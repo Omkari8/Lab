@@ -160,6 +160,8 @@ print(vowel_words)
 masked_text = re.sub(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b", "[email protected]", clean_text)
 print("\nText after replacing emails:")
 print(masked_text)
+
+
 lab 3--
 
 import pandas as pd
@@ -610,6 +612,9 @@ plt.figure(figsize=(6, 5))
 sns.heatmap(pearson_corr, annot=True, cmap='coolwarm', fmt='.2f')
 plt.title('Heatmap of Correlation Matrix')
 plt.show()
+
+
+
 lab 10 --
 
 Import necessary libraries
